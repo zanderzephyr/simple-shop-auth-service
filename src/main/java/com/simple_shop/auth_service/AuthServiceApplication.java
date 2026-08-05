@@ -5,6 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public final class AuthServiceApplication {
+	public AuthServiceApplication() {
+		super();
+	}
+
 	public static void main(final String[] args) {
 		SpringApplication.run(AuthServiceApplication.class, args);
 	}

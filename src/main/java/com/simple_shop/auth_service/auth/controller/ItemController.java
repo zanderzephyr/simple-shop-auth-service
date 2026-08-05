@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.simple_shop.auth_service.auth.dto.ItemDto;
-import com.simple_shop.auth_service.auth.dto.ItemRequestConstraintsDto;
 import com.simple_shop.auth_service.auth.dto.ItemDto.ItemDtoMember;
+import com.simple_shop.auth_service.auth.dto.ItemRequestConstraintsDto;
 import com.simple_shop.auth_service.auth.dto.ItemRequestConstraintsDto.SortingDirection;
 import com.simple_shop.auth_service.auth.exceptions.InvalidItemRequestConstraintsException;
 import com.simple_shop.auth_service.auth.exceptions.ItemValidationException;
@@ -40,7 +40,7 @@ import com.simple_shop.auth_service.auth.service.ItemService;
  * case, another controller with an incremented version could be created.
  */
 @RestController
-@RequestMapping("/api/v1/items")
+@RequestMapping("/api/items/v1")
 public final class ItemController {
 	private static final long MAX_PAGE_SIZE = 100;
 
