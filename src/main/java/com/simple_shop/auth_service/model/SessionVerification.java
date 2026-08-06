@@ -8,7 +8,7 @@ public final class SessionVerification {
 	 *
 	 * @throws IllegalStateException When the builder doesn't validate properly.
 	 */
-	private SessionVerification(final SessionDataBuilder builder) throws IllegalStateException {
+	private SessionVerification(final SessionVerificationBuilder builder) throws IllegalStateException {
 		super();
 
 		builder.validate();
@@ -20,10 +20,10 @@ public final class SessionVerification {
 		return this.sessionData;
 	}
 
-	public static final class SessionDataBuilder {
+	public static final class SessionVerificationBuilder {
 		private SessionData sessionData;
 
-		public SessionDataBuilder() {
+		public SessionVerificationBuilder() {
 			super();
 		}
 
@@ -31,7 +31,7 @@ public final class SessionVerification {
 			return this.sessionData;
 		}
 
-		public SessionDataBuilder setSessionData(final SessionData sessionData) {
+		public SessionVerificationBuilder setSessionData(final SessionData sessionData) {
 			this.sessionData = sessionData;
 
 			return this;

@@ -5,6 +5,8 @@ import java.util.UUID;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import com.simple_shop.auth_service.cache.RedisSessionData.RedisSessionDataBuilder;
+
 /*
  * If the redis service is not available somehow, there are going to be
  * exceptions thrown by Spring. We don't care for those right now and let them
@@ -24,14 +26,14 @@ public class RedisSessionService {
 
 	/**
 	 * Creates a session in the Redis cache and returns the session ID. (The
-	 * returned session ID is the key in Redis and the sessionValue parameter the
-	 * value in Redis.)
+	 * returned session ID is the key in Redis and the string representation of the
+	 * sessionData parameter the value in Redis.)
 	 *
-	 * @param  sessionValue
+	 * @param  sessionData
 	 *
 	 * @return
 	 */
-	public String createSession(final String sessionValue) {
+	public String createSession(final RedisSessionData sessionData) {
 		boolean isSaved = false;
 		int iteration = 0;
 		String sessionId = null;
@@ -43,7 +45,8 @@ public class RedisSessionService {
 			}
 
 			sessionId = UUID.randomUUID().toString();
-			isSaved = this.createSession(sessionId, sessionValue);
+			final String sessionDataString = this.sessionDataToString(sessionData);
+			isSaved = this.createSession(sessionId, sessionDataString);
 		}
 
 		return sessionId;
@@ -54,11 +57,25 @@ public class RedisSessionService {
 		return isSaved != null && isSaved;
 	}
 
-	public String getSession(final String sessionId) {
-		return this.redisTemplate.opsForValue().get(sessionId);
+	public RedisSessionData getSession(final String sessionId) {
+		final String sessionDataString = this.redisTemplate.opsForValue().get(sessionId);
+		return this.stringToSessionData(sessionDataString);
 	}
 
 	public void deleteSession(final String sessionId) {
 		this.redisTemplate.delete(sessionId);
+	}
+
+	private String sessionDataToString(final RedisSessionData sessionData) {
+		final StringBuilder sb = new StringBuilder();
+
+		sb.append(sessionData.getUserId());
+
+		return sb.toString();
+	}
+
+	private RedisSessionData stringToSessionData(final String sessionDataString) {
+		final long userId = Long.parseLong(sessionDataString);
+		return new RedisSessionDataBuilder().setUserId(userId).build();
 	}
 }

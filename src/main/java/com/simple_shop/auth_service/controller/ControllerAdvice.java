@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.simple_shop.auth_service.dto.AuthServiceErrorResponseDto;
 import com.simple_shop.auth_service.dto.AuthServiceErrorResponseDto.AuthServiceErrorResponseDtoBuilder;
+import com.simple_shop.auth_service.exceptions.InvalidRequestException;
 
-@RestControllerAdvice(assignableTypes = UserController.class)
+@RestControllerAdvice(assignableTypes = { UserController.class, BackendController.class, AdminController.class })
 public final class ControllerAdvice {
 
 	public ControllerAdvice() {
@@ -26,6 +27,19 @@ public final class ControllerAdvice {
 				.setDetail(exception.getMessage())//
 				.setHttpState(HttpStatus.BAD_REQUEST.value())//
 				.setMessage("Request contains bad content!")//
+				.setTimestamp(Instant.now())//
+				.build();
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+	}
+
+	@ExceptionHandler(InvalidRequestException.class)
+	public ResponseEntity<AuthServiceErrorResponseDto> handleInvalidRequestException(
+			final InvalidRequestException exception) {
+
+		final AuthServiceErrorResponseDto responseDto = new AuthServiceErrorResponseDtoBuilder()//
+				.setDetail(exception.getMessage())//
+				.setHttpState(HttpStatus.BAD_REQUEST.value())//
+				.setMessage("Request is invalid!")//
 				.setTimestamp(Instant.now())//
 				.build();
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
