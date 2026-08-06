@@ -14,5 +14,5 @@ CREATE TABLE Login (
  
  CREATE TABLE FailedLogin(
 	UserId BIGINT PRIMARY KEY,
-	FailedLoginCount TINYINT NOT NULL DEFAULT 0
+	FailedLoginCount TINYINT NOT NULL
  );

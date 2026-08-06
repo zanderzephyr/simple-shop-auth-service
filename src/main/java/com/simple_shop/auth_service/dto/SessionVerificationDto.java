@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class SessionVerificationDto {
 	private SessionDataDto sessionData;
 
-	private Boolean success;
-
 	public SessionVerificationDto() {
 		super();
 	}
@@ -18,16 +16,6 @@ public class SessionVerificationDto {
 
 	public SessionVerificationDto setSessionData(final SessionDataDto sessionData) {
 		this.sessionData = sessionData;
-
-		return this;
-	}
-
-	public Boolean getSuccess() {
-		return this.success;
-	}
-
-	public SessionVerificationDto setSuccess(final Boolean success) {
-		this.success = success;
 
 		return this;
 	}

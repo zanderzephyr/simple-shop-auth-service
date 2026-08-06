@@ -2,12 +2,10 @@ package com.simple_shop.auth_service.model;
 
 import java.time.LocalDateTime;
 
-import com.simple_shop.auth_service.exceptions.LoginRequestValidationException;
-
 public final class Login {
 	private final Long id;
 
-	private LocalDateTime timestamp;
+	private final LocalDateTime timestamp;
 
 	private final String username;
 
@@ -18,95 +16,136 @@ public final class Login {
 	/**
 	 * @param  builder
 	 *
-	 * @throws LoginValidationException When the builder doesn't validate properly.
+	 * @throws IllegalStateException When the builder doesn't validate properly.
 	 */
-	private Login(final LoginRequestBuilder builder) throws LoginRequestValidationException {
+	private Login(final LoginBuilder builder) throws IllegalStateException {
 		super();
 
 		builder.validate();
 
+		this.id = builder.getId();
+		this.timestamp = builder.getTimestamp();
 		this.username = builder.getUsername();
-		this.passwordHash = builder.getPasswordHash();
-		this.clientType = builder.getClientType();
+		this.userId = builder.getUserId();
+		this.success = builder.getSuccess();
+	}
+
+	public Long getId() {
+		return this.id;
+	}
+
+	public LocalDateTime getTimestamp() {
+		return this.timestamp;
 	}
 
 	public String getUsername() {
 		return this.username;
 	}
 
-	public String getPasswordHash() {
-		return this.passwordHash;
+	public Long getUserId() {
+		return this.userId;
 	}
 
-	public ClientType getClientType() {
-		return this.clientType;
+	public boolean getSuccess() {
+		return this.success;
 	}
 
-	public static final class LoginRequestBuilder {
+	public static final class LoginBuilder {
+		private Long id;
+
+		private LocalDateTime timestamp;
+
 		private String username;
 
-		private String passwordHash;
+		private Long userId;
 
-		private ClientType clientType;
+		private Boolean success;
 
-		public LoginRequestBuilder() {
+		public LoginBuilder() {
 			super();
+		}
+
+		public Long getId() {
+			return this.id;
+		}
+
+		public LoginBuilder setId(final Long id) {
+			this.id = id;
+
+			return this;
+		}
+
+		public LocalDateTime getTimestamp() {
+			return this.timestamp;
+		}
+
+		public LoginBuilder setTimestamp(final LocalDateTime timestamp) {
+			this.timestamp = timestamp;
+
+			return this;
 		}
 
 		public String getUsername() {
 			return this.username;
 		}
 
-		public LoginRequestBuilder setUsername(final String username) {
+		public LoginBuilder setUsername(final String username) {
 			this.username = username;
 
 			return this;
 		}
 
-		public String getPasswordHash() {
-			return this.passwordHash;
+		public Long getUserId() {
+			return this.userId;
 		}
 
-		public LoginRequestBuilder setPasswordHash(final String passwordHash) {
-			this.passwordHash = passwordHash;
+		public LoginBuilder setUserId(final Long userId) {
+			this.userId = userId;
 
 			return this;
 		}
 
-		public ClientType getClientType() {
-			return this.clientType;
+		public Boolean getSuccess() {
+			return this.success;
 		}
 
-		public LoginRequestBuilder setClientType(final ClientType clientType) {
-			this.clientType = clientType;
+		public LoginBuilder setSuccess(final Boolean success) {
+			this.success = success;
 
 			return this;
 		}
 
 		/**
-		 * @throws LoginRequestValidationException When a field is not properly set.
+		 * @throws IllegalStateException When a field is not properly set.
 		 */
-		public void validate() throws LoginRequestValidationException {
-			if (this.username == null || this.username.isBlank() || this.username.length() > 30) {
-				throw new LoginRequestValidationException("Invalid username!");
+		public void validate() throws IllegalStateException {
+			if (this.id < 0) {
+				throw new IllegalStateException("Invalid ID!");
 			}
 
-			if (this.passwordHash == null || this.passwordHash.isBlank()) {
-				throw new LoginRequestValidationException("Invalid password hash!");
+			if (this.timestamp == null) {
+				throw new IllegalStateException("Invalid timestamp!");
 			}
 
-			if (this.clientType == null) {
-				throw new LoginRequestValidationException("Invalid client type!");
+			if (this.username != null && (this.username.isBlank() || this.username.length() > 30)) {
+				throw new IllegalStateException("Invalid username!");
+			}
+
+			if (this.userId != null && this.userId < 0) {
+				throw new IllegalStateException("Invalid user ID!");
+			}
+
+			if (this.success == null) {
+				throw new IllegalStateException("Invalid success!");
 			}
 		}
 
 		/**
 		 * @return
 		 *
-		 * @throws LoginRequestValidationException When the builder doesn't validate
-		 *                                         properly.
+		 * @throws IllegalStateException When the builder doesn't validate properly.
 		 */
-		public Login build() throws LoginRequestValidationException {
+		public Login build() throws IllegalStateException {
 			return new Login(this);
 		}
 	}

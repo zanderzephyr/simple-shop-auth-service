@@ -8,13 +8,13 @@ import com.simple_shop.auth_service.exceptions.ItemNotFoundException;
 import com.simple_shop.auth_service.exceptions.LoginRequestValidationException;
 import com.simple_shop.auth_service.model.ItemAction;
 import com.simple_shop.auth_service.model.LoginRequest;
-import com.simple_shop.auth_service.persistence.ItemTransactionHandler;
+import com.simple_shop.auth_service.persistence.AuthTransactionHandler;
 
 @Service
 public final class AuthService {
-	private final ItemTransactionHandler itemTransactionHandler;
+	private final AuthTransactionHandler itemTransactionHandler;
 
-	public AuthService(final ItemTransactionHandler itemTransactionHandler) {
+	public AuthService(final AuthTransactionHandler itemTransactionHandler) {
 		super();
 
 		this.itemTransactionHandler = itemTransactionHandler;
@@ -32,7 +32,7 @@ public final class AuthService {
 	public LoginRequest createItem(final LoginRequest itemToCreate, final long userId) {
 		AuthService.validateItemToCreate(itemToCreate);
 
-		final LoginRequest finalizedItem = ItemTransactionHandler.finalizeItem(itemToCreate, userId);
+		final LoginRequest finalizedItem = AuthTransactionHandler.finalizeItem(itemToCreate, userId);
 		final LoginRequest createdItem = this.itemTransactionHandler.saveItem(finalizedItem, ItemAction.CREATE);
 		return createdItem;
 	}
@@ -51,7 +51,7 @@ public final class AuthService {
 		// Ensure the item exists
 		this.findItemById(itemToModify.getId());
 
-		final LoginRequest finalizedItem = ItemTransactionHandler.finalizeItem(itemToModify, userId);
+		final LoginRequest finalizedItem = AuthTransactionHandler.finalizeItem(itemToModify, userId);
 
 		final LoginRequest modifiedItem = this.itemTransactionHandler.saveItem(finalizedItem, ItemAction.MODIFY);
 

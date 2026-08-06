@@ -12,9 +12,9 @@ import com.simple_shop.auth_service.dto.AuthServiceErrorResponseDto;
 import com.simple_shop.auth_service.dto.AuthServiceErrorResponseDto.AuthServiceErrorResponseDtoBuilder;
 
 @RestControllerAdvice(assignableTypes = UserController.class)
-public final class AuthControllerAdvice {
+public final class ControllerAdvice {
 
-	public AuthControllerAdvice() {
+	public ControllerAdvice() {
 		super();
 	}
 
