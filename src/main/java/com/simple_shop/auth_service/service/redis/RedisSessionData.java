@@ -1,4 +1,4 @@
-package com.simple_shop.auth_service.cache;
+package com.simple_shop.auth_service.service.redis;
 
 import java.util.Objects;
 

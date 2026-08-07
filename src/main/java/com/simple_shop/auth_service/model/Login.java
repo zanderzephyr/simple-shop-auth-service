@@ -1,6 +1,7 @@
 package com.simple_shop.auth_service.model;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class Login {
 	private final Long id;
@@ -13,13 +14,10 @@ public final class Login {
 
 	private final boolean success;
 
-	/**
-	 * @param  builder
-	 *
-	 * @throws IllegalStateException When the builder doesn't validate properly.
-	 */
 	private Login(final LoginBuilder builder) throws IllegalStateException {
 		super();
+
+		Objects.requireNonNull(builder);
 
 		builder.validate();
 
@@ -115,9 +113,6 @@ public final class Login {
 			return this;
 		}
 
-		/**
-		 * @throws IllegalStateException When a field is not properly set.
-		 */
 		public void validate() throws IllegalStateException {
 			if (this.id < 0) {
 				throw new IllegalStateException("Invalid ID!");
@@ -140,11 +135,6 @@ public final class Login {
 			}
 		}
 
-		/**
-		 * @return
-		 *
-		 * @throws IllegalStateException When the builder doesn't validate properly.
-		 */
 		public Login build() throws IllegalStateException {
 			return new Login(this);
 		}

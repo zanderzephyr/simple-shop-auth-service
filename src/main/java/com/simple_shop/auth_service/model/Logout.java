@@ -1,6 +1,7 @@
 package com.simple_shop.auth_service.model;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class Logout {
 	private final Long id;
@@ -9,13 +10,10 @@ public final class Logout {
 
 	private final Long userId;
 
-	/**
-	 * @param  builder
-	 *
-	 * @throws IllegalStateException When the builder doesn't validate properly.
-	 */
 	private Logout(final LogoutBuilder builder) throws IllegalStateException {
 		super();
+
+		Objects.requireNonNull(builder);
 
 		builder.validate();
 
@@ -77,9 +75,6 @@ public final class Logout {
 			return this;
 		}
 
-		/**
-		 * @throws IllegalStateException When a field is not properly set.
-		 */
 		public void validate() throws IllegalStateException {
 			if (this.id < 0) {
 				throw new IllegalStateException("Invalid ID!");

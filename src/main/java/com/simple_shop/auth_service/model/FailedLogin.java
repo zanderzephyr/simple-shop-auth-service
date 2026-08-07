@@ -1,17 +1,16 @@
 package com.simple_shop.auth_service.model;
 
+import java.util.Objects;
+
 public final class FailedLogin {
 	private final long userId;
 
 	private final int failedLoginCount;
 
-	/**
-	 * @param  builder
-	 *
-	 * @throws IllegalStateException When the builder doesn't validate properly.
-	 */
 	private FailedLogin(final FailedLoginBuilder builder) throws IllegalStateException {
 		super();
+
+		Objects.requireNonNull(builder);
 
 		builder.validate();
 
@@ -56,9 +55,6 @@ public final class FailedLogin {
 			return this;
 		}
 
-		/**
-		 * @throws IllegalStateException When a field is not properly set.
-		 */
 		public void validate() throws IllegalStateException {
 			if (this.userId == null || this.userId < 0) {
 				throw new IllegalStateException("Invalid user ID!");
@@ -69,11 +65,6 @@ public final class FailedLogin {
 			}
 		}
 
-		/**
-		 * @return
-		 *
-		 * @throws IllegalStateException When the builder doesn't validate properly.
-		 */
 		public FailedLogin build() throws IllegalStateException {
 			return new FailedLogin(this);
 		}

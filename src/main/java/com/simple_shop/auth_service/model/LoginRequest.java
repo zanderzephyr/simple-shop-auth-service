@@ -1,6 +1,6 @@
 package com.simple_shop.auth_service.model;
 
-import com.simple_shop.auth_service.exceptions.LoginRequestValidationException;
+import java.util.Objects;
 
 public final class LoginRequest {
 	private final String username;
@@ -9,14 +9,10 @@ public final class LoginRequest {
 
 	private final ClientType clientType;
 
-	/**
-	 * @param  builder
-	 *
-	 * @throws LoginRequestValidationException When the builder doesn't validate
-	 *                                         properly.
-	 */
-	private LoginRequest(final LoginRequestBuilder builder) throws LoginRequestValidationException {
+	private LoginRequest(final LoginRequestBuilder builder) throws IllegalStateException {
 		super();
+
+		Objects.requireNonNull(builder);
 
 		builder.validate();
 
@@ -78,30 +74,21 @@ public final class LoginRequest {
 			return this;
 		}
 
-		/**
-		 * @throws LoginRequestValidationException When a field is not properly set.
-		 */
-		public void validate() throws LoginRequestValidationException {
+		public void validate() throws IllegalStateException {
 			if (this.username == null || this.username.isBlank() || this.username.length() > 30) {
-				throw new LoginRequestValidationException("Invalid username!");
+				throw new IllegalStateException("Invalid username!");
 			}
 
 			if (this.passwordHash == null || this.passwordHash.isBlank()) {
-				throw new LoginRequestValidationException("Invalid password hash!");
+				throw new IllegalStateException("Invalid password hash!");
 			}
 
 			if (this.clientType == null) {
-				throw new LoginRequestValidationException("Invalid client type!");
+				throw new IllegalStateException("Invalid client type!");
 			}
 		}
 
-		/**
-		 * @return
-		 *
-		 * @throws LoginRequestValidationException When the builder doesn't validate
-		 *                                         properly.
-		 */
-		public LoginRequest build() throws LoginRequestValidationException {
+		public LoginRequest build() throws IllegalStateException {
 			return new LoginRequest(this);
 		}
 	}

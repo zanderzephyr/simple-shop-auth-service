@@ -1,15 +1,14 @@
 package com.simple_shop.auth_service.model;
 
+import java.util.Objects;
+
 public final class SessionVerification {
 	private final SessionData sessionData;
 
-	/**
-	 * @param  builder
-	 *
-	 * @throws IllegalStateException When the builder doesn't validate properly.
-	 */
 	private SessionVerification(final SessionVerificationBuilder builder) throws IllegalStateException {
 		super();
+
+		Objects.requireNonNull(builder);
 
 		builder.validate();
 
@@ -37,18 +36,10 @@ public final class SessionVerification {
 			return this;
 		}
 
-		/**
-		 * @throws IllegalStateException When a field is not properly set.
-		 */
 		public void validate() throws IllegalStateException {
 			// Nothing so far.
 		}
 
-		/**
-		 * @return
-		 *
-		 * @throws IllegalStateException When the builder doesn't validate properly.
-		 */
 		public SessionVerification build() throws IllegalStateException {
 			return new SessionVerification(this);
 		}

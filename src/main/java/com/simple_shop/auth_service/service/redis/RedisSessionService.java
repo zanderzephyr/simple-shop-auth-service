@@ -1,11 +1,11 @@
-package com.simple_shop.auth_service.cache;
+package com.simple_shop.auth_service.service.redis;
 
 import java.util.UUID;
 
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.simple_shop.auth_service.cache.RedisSessionData.RedisSessionDataBuilder;
+import com.simple_shop.auth_service.service.redis.RedisSessionData.RedisSessionDataBuilder;
 
 /*
  * If the redis service is not available somehow, there are going to be
