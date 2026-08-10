@@ -68,10 +68,7 @@ public final class UserController {
 		 * logout.
 		 */
 		if (sessionId != null) {
-			/*
-			 * TODO Call authService.logout(sessionId) to clean up Redis and add to Logouts
-			 * table
-			 */
+			this.authService.logout(sessionId);
 		}
 
 		final ResponseCookie clearingCookie = ResponseCookie.from("session_id", "")//

@@ -130,4 +130,8 @@ public final class AuthService {
 		}
 		return Boolean.FALSE;
 	}
+
+	public void logout(final String sessionId) {
+		this.redisSessionService.deleteSession(sessionId);
+	}
 }
