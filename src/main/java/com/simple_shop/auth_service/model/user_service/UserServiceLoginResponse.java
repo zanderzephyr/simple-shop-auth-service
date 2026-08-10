@@ -5,7 +5,7 @@ import java.util.Objects;
 public final class UserServiceLoginResponse {
 	private final Long userId;
 
-	private final boolean success;
+	private final boolean credentialsOk;
 
 	private UserServiceLoginResponse(final UserServiceLoginResponseBuilder builder) throws IllegalStateException {
 		super();
@@ -15,21 +15,21 @@ public final class UserServiceLoginResponse {
 		builder.validate();
 
 		this.userId = builder.getUserId();
-		this.success = builder.getSuccess();
+		this.credentialsOk = builder.getCredentialsOk();
 	}
 
 	public Long getUserId() {
 		return this.userId;
 	}
 
-	public boolean getSuccess() {
-		return this.success;
+	public boolean getCredentialsOk() {
+		return this.credentialsOk;
 	}
 
 	public static final class UserServiceLoginResponseBuilder {
 		private Long userId;
 
-		private Boolean success;
+		private Boolean credentialsOk;
 
 		public UserServiceLoginResponseBuilder() {
 			super();
@@ -45,12 +45,12 @@ public final class UserServiceLoginResponse {
 			return this;
 		}
 
-		public Boolean getSuccess() {
-			return this.success;
+		public Boolean getCredentialsOk() {
+			return this.credentialsOk;
 		}
 
-		public UserServiceLoginResponseBuilder setSuccess(final Boolean success) {
-			this.success = success;
+		public UserServiceLoginResponseBuilder setCredentialsOk(final Boolean credentialsOk) {
+			this.credentialsOk = credentialsOk;
 
 			return this;
 		}
@@ -60,8 +60,8 @@ public final class UserServiceLoginResponse {
 				throw new IllegalStateException("Invalid user ID!");
 			}
 
-			if (this.success == null) {
-				throw new IllegalStateException("Invalid success!");
+			if (this.credentialsOk == null) {
+				throw new IllegalStateException("Invalid credentialsOk!");
 			}
 		}
 

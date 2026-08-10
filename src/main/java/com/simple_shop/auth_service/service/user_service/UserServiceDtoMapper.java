@@ -24,7 +24,7 @@ final class UserServiceDtoMapper {
 	public static UserServiceLoginResponse toDomain(final UserServiceLoginResponseDto loginResponseDto) {
 		try {
 			return new UserServiceLoginResponseBuilder()//
-					.setSuccess(loginResponseDto.getSuccess())//
+					.setCredentialsOk(loginResponseDto.getSuccess())//
 					.setUserId(loginResponseDto.getUserId())//
 					.build();
 		} catch (final Exception e) {

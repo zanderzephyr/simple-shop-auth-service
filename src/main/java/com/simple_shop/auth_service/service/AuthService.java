@@ -67,11 +67,17 @@ public final class AuthService {
 				.verifyLoginCredentials(userServiceLoginRequest);
 
 		final Long userId = userServiceLoginResponse.getUserId();
+		final boolean credentialsOk = userServiceLoginResponse.getCredentialsOk();
 
-		this.registerLogin(loginRequest, userServiceLoginResponse);
+		final LoginBuilder loginBuilder = new LoginBuilder()//
+				.setSuccess(credentialsOk)//
+				.setTimestamp(AuthServiceUtils.createNow())//
+				.setUserId(userServiceLoginResponse.getUserId())//
+				.setUsername(loginRequest.getUsername());
+		this.authTransactionHandler.saveLogin(loginBuilder.build());
 
 		if (userId != null && !this.isUserLocked(userId)) {
-			if (userServiceLoginResponse.getSuccess()) {
+			if (credentialsOk) {
 				this.updateFailedLoginsForLoginSucceeded(userId, loginRequest);
 
 				final RedisSessionData redisSessionData = new RedisSessionDataBuilder()//
@@ -96,17 +102,6 @@ public final class AuthService {
 				.setErrorMessage("Invalid credentials")//
 				.setSuccess(Boolean.FALSE)//
 				.build();
-	}
-
-	private void registerLogin(//
-			final LoginRequest loginRequest, final UserServiceLoginResponse userServiceLoginResponse) {
-
-		final LoginBuilder loginBuilder = new LoginBuilder()//
-				.setSuccess(userServiceLoginResponse.getSuccess())//
-				.setTimestamp(AuthServiceUtils.createNow())//
-				.setUserId(userServiceLoginResponse.getUserId())//
-				.setUsername(loginRequest.getUsername());
-		this.authTransactionHandler.saveLogin(loginBuilder.build());
 	}
 
 	private void updateFailedLoginsForLoginSucceeded(final long userId, final LoginRequest loginRequest) {
