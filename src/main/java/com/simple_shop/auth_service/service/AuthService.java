@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import com.simple_shop.auth_service.model.FailedLogin;
 import com.simple_shop.auth_service.model.FailedLogin.FailedLoginBuilder;
-import com.simple_shop.auth_service.model.Login.LoginBuilder;
 import com.simple_shop.auth_service.model.LoginRequest;
 import com.simple_shop.auth_service.model.LoginResponse;
 import com.simple_shop.auth_service.model.LoginResponse.LoginResponseBuilder;
@@ -20,7 +19,6 @@ import com.simple_shop.auth_service.service.redis.RedisSessionData;
 import com.simple_shop.auth_service.service.redis.RedisSessionData.RedisSessionDataBuilder;
 import com.simple_shop.auth_service.service.redis.RedisSessionService;
 import com.simple_shop.auth_service.service.user_service.UserService;
-import com.simple_shop.auth_service.utils.AuthServiceUtils;
 
 @Service
 public final class AuthService {
@@ -63,20 +61,15 @@ public final class AuthService {
 				.setPasswordHash(loginRequest.getPasswordHash())//
 				.setUsername(loginRequest.getUsername())//
 				.build();
+
 		final UserServiceLoginResponse userServiceLoginResponse = this.userService
 				.verifyLoginCredentials(userServiceLoginRequest);
 
 		final Long userId = userServiceLoginResponse.getUserId();
 		final boolean credentialsOk = userServiceLoginResponse.getCredentialsOk();
+		final boolean userLocked = this.isUserLocked(userId);
 
-		final LoginBuilder loginBuilder = new LoginBuilder()//
-				.setSuccess(credentialsOk)//
-				.setTimestamp(AuthServiceUtils.createNow())//
-				.setUserId(userServiceLoginResponse.getUserId())//
-				.setUsername(loginRequest.getUsername());
-		this.authTransactionHandler.saveLogin(loginBuilder.build());
-
-		if (userId != null && !this.isUserLocked(userId)) {
+		if (userId != null && !userLocked) {
 			if (credentialsOk) {
 				this.updateFailedLoginsForLoginSucceeded(userId, loginRequest);
 
@@ -86,7 +79,7 @@ public final class AuthService {
 				final String sessionId = this.redisSessionService.createSession(redisSessionData);
 
 				return new LoginResponseBuilder()//
-						.setSuccess(Boolean.TRUE)//
+						.setCredentialsOk(Boolean.TRUE)//
 						.setUserId(userId)//
 						.setSessionId(sessionId)//
 						.build();
@@ -100,7 +93,7 @@ public final class AuthService {
 		}
 		return new LoginResponseBuilder()//
 				.setErrorMessage("Invalid credentials")//
-				.setSuccess(Boolean.FALSE)//
+				.setCredentialsOk(Boolean.FALSE)//
 				.build();
 	}
 
@@ -130,8 +123,11 @@ public final class AuthService {
 		this.authTransactionHandler.saveFailedLogin(failedLoginBuilder.build());
 	}
 
-	private boolean isUserLocked(final long userId) {
-		final FailedLogin failedLogin = this.authTransactionHandler.getFailedLogins(userId);
-		return failedLogin != null && failedLogin.getFailedLoginCount() >= AuthService.USER_LOCKED_LOGIN_COUNT;
+	private boolean isUserLocked(final Long userId) {
+		if (userId != null) {
+			final FailedLogin failedLogin = this.authTransactionHandler.getFailedLogins(userId);
+			return failedLogin != null && failedLogin.getFailedLoginCount() >= AuthService.USER_LOCKED_LOGIN_COUNT;
+		}
+		return Boolean.FALSE;
 	}
 }

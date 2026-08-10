@@ -43,7 +43,7 @@ public final class UserController {
 		final LoginResponseDto loginResponseDto = DtoMapper.toDto(loginResponse);
 
 		final ResponseEntity<LoginResponseDto> responseEntity;
-		if (loginResponse.getSuccess()) {
+		if (loginResponse.getCredentialsOk()) {
 			final ResponseCookie sessionCookie = ResponseCookie.from("session_id", loginResponse.getSessionId())//
 					.httpOnly(true)//
 					.secure(false)// false for local HTTP dev (true in prod!)

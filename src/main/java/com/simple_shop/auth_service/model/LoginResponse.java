@@ -3,7 +3,7 @@ package com.simple_shop.auth_service.model;
 import java.util.Objects;
 
 public final class LoginResponse {
-	private final boolean success;
+	private final boolean credentialsOk;
 
 	private final Long userId;
 
@@ -18,14 +18,14 @@ public final class LoginResponse {
 
 		builder.validate();
 
-		this.success = builder.getSuccess();
+		this.credentialsOk = builder.getCredentialsOk();
 		this.userId = builder.getUserId();
 		this.errorMessage = builder.getErrorMessage();
 		this.sessionId = builder.getSessionId();
 	}
 
-	public boolean getSuccess() {
-		return this.success;
+	public boolean getCredentialsOk() {
+		return this.credentialsOk;
 	}
 
 	public Long getUserId() {
@@ -41,7 +41,7 @@ public final class LoginResponse {
 	}
 
 	public static final class LoginResponseBuilder {
-		private Boolean success;
+		private Boolean credentialsOk;
 
 		private Long userId;
 
@@ -53,12 +53,12 @@ public final class LoginResponse {
 			super();
 		}
 
-		public Boolean getSuccess() {
-			return this.success;
+		public Boolean getCredentialsOk() {
+			return this.credentialsOk;
 		}
 
-		public LoginResponseBuilder setSuccess(final Boolean success) {
-			this.success = success;
+		public LoginResponseBuilder setCredentialsOk(final Boolean credentialsOk) {
+			this.credentialsOk = credentialsOk;
 
 			return this;
 		}
@@ -94,8 +94,8 @@ public final class LoginResponse {
 		}
 
 		public void validate() throws IllegalStateException {
-			if (this.success == null) {
-				throw new IllegalStateException("Invalid success!");
+			if (this.credentialsOk == null) {
+				throw new IllegalStateException("Invalid credentialsOk!");
 			}
 
 			if (this.userId != null && this.userId < 0) {

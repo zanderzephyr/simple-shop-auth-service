@@ -8,7 +8,7 @@ public class UserServiceLoginResponseDto {
 	@JsonLongFormatter
 	private Long userId;
 
-	private Boolean success;
+	private Boolean credentialsOk;
 
 	public UserServiceLoginResponseDto() {
 		super();
@@ -24,12 +24,12 @@ public class UserServiceLoginResponseDto {
 		return this;
 	}
 
-	public Boolean getSuccess() {
-		return this.success;
+	public Boolean getCredentialsOk() {
+		return this.credentialsOk;
 	}
 
-	public UserServiceLoginResponseDto setSuccess(final Boolean success) {
-		this.success = success;
+	public UserServiceLoginResponseDto setCredentialsOk(final Boolean credentialsOk) {
+		this.credentialsOk = credentialsOk;
 
 		return this;
 	}

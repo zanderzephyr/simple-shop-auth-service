@@ -38,7 +38,7 @@ final class DtoMapper {
 		final LoginResponseDto loginResponseDto = new LoginResponseDto();
 
 		loginResponseDto.setErrorMessage(loginResponse.getErrorMessage());
-		loginResponseDto.setSuccess(loginResponse.getSuccess());
+		loginResponseDto.setCredentialsOk(loginResponse.getCredentialsOk());
 		loginResponseDto.setUserId(loginResponse.getUserId());
 
 		// Not setting the session ID here. This field is just for internal use.

@@ -5,7 +5,7 @@ import com.simple_shop.auth_service.dto.formatter.JsonLongFormatter;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LoginResponseDto {
-	private boolean success; // TODO De-/serialized correctly? What is accepted? Write myself?!
+	private boolean credentialsOk; // TODO De-/serialized correctly? What is accepted? Write myself?!
 
 	@JsonLongFormatter
 	private Long userId;
@@ -16,12 +16,12 @@ public class LoginResponseDto {
 		super();
 	}
 
-	public boolean getSuccess() {
-		return this.success;
+	public boolean getCredentialsOk() {
+		return this.credentialsOk;
 	}
 
-	public LoginResponseDto setSuccess(final boolean success) {
-		this.success = success;
+	public LoginResponseDto setCredentialsOk(final boolean credentialsOk) {
+		this.credentialsOk = credentialsOk;
 
 		return this;
 	}
