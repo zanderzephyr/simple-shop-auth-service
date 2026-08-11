@@ -2,6 +2,11 @@ package com.simple_shop.auth_service.model;
 
 import java.util.Objects;
 
+/**
+ * The auth service sends a DTO object of this class to a requesting client
+ * (usually the gateway). If the session exists, sessionData is set and contains
+ * everything relevant for this session verification.
+ */
 public final class SessionVerification {
 	private final SessionData sessionData;
 
