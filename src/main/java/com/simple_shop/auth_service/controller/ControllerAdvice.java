@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.simple_shop.auth_service.dto.AuthServiceErrorResponseDto;
 import com.simple_shop.auth_service.dto.AuthServiceErrorResponseDto.AuthServiceErrorResponseDtoBuilder;
-import com.simple_shop.auth_service.exceptions.InvalidRequestException;
+import com.simple_shop.auth_service.exceptions.InvalidMessageException;
 
 @RestControllerAdvice(assignableTypes = { UserController.class, BackendController.class, AdminController.class })
 public final class ControllerAdvice {
@@ -32,9 +32,9 @@ public final class ControllerAdvice {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 	}
 
-	@ExceptionHandler(InvalidRequestException.class)
+	@ExceptionHandler(InvalidMessageException.class)
 	public ResponseEntity<AuthServiceErrorResponseDto> handleInvalidRequestException(
-			final InvalidRequestException exception) {
+			final InvalidMessageException exception) {
 
 		final AuthServiceErrorResponseDto responseDto = new AuthServiceErrorResponseDtoBuilder()//
 				.setDetail(exception.getMessage())//

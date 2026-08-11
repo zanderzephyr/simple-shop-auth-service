@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.simple_shop.auth_service.dto.SessionVerificationDto;
-import com.simple_shop.auth_service.exceptions.InvalidRequestException;
+import com.simple_shop.auth_service.exceptions.InvalidMessageException;
 import com.simple_shop.auth_service.model.SessionVerification;
 import com.simple_shop.auth_service.service.AuthService;
 
@@ -26,7 +26,7 @@ public final class BackendController {
 	@GetMapping("/{sessionId}")
 	public ResponseEntity<SessionVerificationDto> verifySession(@PathVariable final String sessionId) {
 		if (sessionId == null | sessionId.isBlank()) {
-			throw new InvalidRequestException("No session ID!");
+			throw new InvalidMessageException("No session ID!");
 		}
 
 		final SessionVerification sessionVerification = this.authService.verifySession(sessionId);

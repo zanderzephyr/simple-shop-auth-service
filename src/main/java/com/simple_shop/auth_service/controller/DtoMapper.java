@@ -4,7 +4,7 @@ import com.simple_shop.auth_service.dto.LoginRequestDto;
 import com.simple_shop.auth_service.dto.LoginResponseDto;
 import com.simple_shop.auth_service.dto.SessionDataDto;
 import com.simple_shop.auth_service.dto.SessionVerificationDto;
-import com.simple_shop.auth_service.exceptions.InvalidRequestException;
+import com.simple_shop.auth_service.exceptions.InvalidMessageException;
 import com.simple_shop.auth_service.model.ClientType;
 import com.simple_shop.auth_service.model.LoginRequest;
 import com.simple_shop.auth_service.model.LoginRequest.LoginRequestBuilder;
@@ -30,7 +30,7 @@ final class DtoMapper {
 					.setClientType(DataTypeUtils.parseEnum(loginRequestDto.getClientType(), ClientType.class))//
 					.build();
 		} catch (final Exception e) {
-			throw new InvalidRequestException(e);
+			throw new InvalidMessageException(e);
 		}
 	}
 
