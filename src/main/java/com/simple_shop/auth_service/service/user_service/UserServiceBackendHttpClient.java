@@ -14,6 +14,6 @@ interface UserServiceBackendHttpClient {
 	@PostExchange("/backend/verify-credentials")
 	UserServiceLoginResponseDto verifyLoginCredentials(@RequestBody UserServiceLoginRequestDto request);
 
-	@GetExchange("/regular/user-type/{userId}")
+	@GetExchange("/regular/get-user-type/{userId}")
 	String getUserType(@PathVariable Long userId);
 }

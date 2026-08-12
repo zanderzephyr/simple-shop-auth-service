@@ -23,7 +23,7 @@ public final class BackendController {
 		this.authService = authService;
 	}
 
-	@GetMapping("/{sessionId}")
+	@GetMapping("/verify-session/{sessionId}")
 	public ResponseEntity<SessionVerificationDto> verifySession(@PathVariable final String sessionId) {
 		if (sessionId == null | sessionId.isBlank()) {
 			throw new InvalidMessageException("No session ID!");
