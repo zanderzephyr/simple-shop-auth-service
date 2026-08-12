@@ -14,12 +14,12 @@ import com.simple_shop.auth_service.model.SessionVerification.SessionVerificatio
 import com.simple_shop.auth_service.model.user_service.UserServiceLoginRequest;
 import com.simple_shop.auth_service.model.user_service.UserServiceLoginRequest.UserServiceLoginRequestBuilder;
 import com.simple_shop.auth_service.model.user_service.UserServiceLoginResponse;
+import com.simple_shop.auth_service.model.user_service.UserServiceUserType;
 import com.simple_shop.auth_service.persistence.AuthTransactionHandler;
 import com.simple_shop.auth_service.service.redis.RedisSessionData;
 import com.simple_shop.auth_service.service.redis.RedisSessionData.RedisSessionDataBuilder;
 import com.simple_shop.auth_service.service.redis.RedisSessionService;
 import com.simple_shop.auth_service.service.user_service.UserService;
-import com.simple_shop.auth_service.service.user_service.UserServiceUserType;
 
 @Service
 public final class AuthService {

@@ -6,6 +6,7 @@ import com.simple_shop.auth_service.dto.user_service.UserServiceLoginRequestDto;
 import com.simple_shop.auth_service.dto.user_service.UserServiceLoginResponseDto;
 import com.simple_shop.auth_service.model.user_service.UserServiceLoginRequest;
 import com.simple_shop.auth_service.model.user_service.UserServiceLoginResponse;
+import com.simple_shop.auth_service.model.user_service.UserServiceUserType;
 import com.simple_shop.auth_service.utils.DataTypeUtils;
 
 @Service
