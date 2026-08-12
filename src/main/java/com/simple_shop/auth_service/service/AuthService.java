@@ -19,6 +19,7 @@ import com.simple_shop.auth_service.service.redis.RedisSessionData;
 import com.simple_shop.auth_service.service.redis.RedisSessionData.RedisSessionDataBuilder;
 import com.simple_shop.auth_service.service.redis.RedisSessionService;
 import com.simple_shop.auth_service.service.user_service.UserService;
+import com.simple_shop.auth_service.service.user_service.UserServiceUserType;
 
 @Service
 public final class AuthService {
@@ -47,10 +48,21 @@ public final class AuthService {
 
 		final SessionVerificationBuilder builder = new SessionVerificationBuilder();
 		if (redisSessionData != null) {
-			final SessionData sessionData = new SessionDataBuilder()//
-					.setUserId(redisSessionData.getUserId())//
-					.build();
-			builder.setSessionData(sessionData);
+			final long userId = redisSessionData.getUserId();
+
+			/*
+			 * Make sure, the user still exists in the user service (it might have been
+			 * deleted by now)
+			 */
+			final UserServiceUserType userType = this.userService.getUserType(userId);
+			if (userType != null) {
+				final SessionData sessionData = new SessionDataBuilder()//
+						.setUserId(userId)//
+						.build();
+				builder.setSessionData(sessionData);
+			} else {
+				this.logout(sessionId);
+			}
 		}
 
 		return builder.build();
@@ -67,9 +79,8 @@ public final class AuthService {
 
 		final Long userId = userServiceLoginResponse.getUserId();
 		final boolean credentialsOk = userServiceLoginResponse.getCredentialsOk();
-		final boolean userLocked = this.isUserLocked(userId);
 
-		if (userId != null && !userLocked) {
+		if (userId != null && !this.isUserLocked(userId)) {
 			if (credentialsOk) {
 				this.updateFailedLoginsForLoginSucceeded(userId, loginRequest);
 
