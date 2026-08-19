@@ -89,15 +89,15 @@ public final class UserController {
 	/*
 	 * This endpoint is a bit tricky. Whenever the frontend initializes, it needs to
 	 * know if a session already exists. I calls this endpoint. The gateway forwards
-	 * the request only when a session exists (it decides based on the HttpOnly
-	 * session cookie). All, the auth service has to do now, is mirror the user ID,
-	 * the gateway already determined, back to the frontend. With that user ID, the
-	 * frontend can achieve the rest. This endpoint is so simple, we do not forward
-	 * to the service as a consequence.
+	 * the request for both cases - session exists / session doesn't exist - (it
+	 * decides based on the HttpOnly session cookie). All, the auth service has to
+	 * do now, is mirror the user ID, the gateway already determined, back to the
+	 * frontend. With that user ID, the frontend can achieve the rest. This endpoint
+	 * is so simple, we do not forward to the service as a consequence.
 	 */
 	@GetMapping("/me")
 	public ResponseEntity<CurrentUserDto> getCurrentUser(//
-			@RequestHeader(name = "X-User-Id") final long userId) {
+			@RequestHeader(name = "X-User-Id", required = false) final Long userId) {
 
 		final CurrentUserDto currentUserDto = new CurrentUserDto();
 		currentUserDto.setUserId(userId);
