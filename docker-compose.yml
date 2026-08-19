@@ -2,5 +2,5 @@ services:
   redis:
     image: 'redis:alpine'
     ports:
-      - '6081:6081'
+      - '6081:6379'
     pull_policy: always
