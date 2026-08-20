@@ -33,13 +33,13 @@ public final class ControllerAdvice {
 	}
 
 	@ExceptionHandler(InvalidMessageException.class)
-	public ResponseEntity<AuthServiceErrorResponseDto> handleInvalidRequestException(
+	public ResponseEntity<AuthServiceErrorResponseDto> handleInvalidMessageException(
 			final InvalidMessageException exception) {
 
 		final AuthServiceErrorResponseDto responseDto = new AuthServiceErrorResponseDtoBuilder()//
 				.setDetail(exception.getMessage())//
 				.setHttpState(HttpStatus.BAD_REQUEST.value())//
-				.setMessage("Request is invalid!")//
+				.setMessage("Invalid message!")//
 				.setTimestamp(Instant.now())//
 				.build();
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
