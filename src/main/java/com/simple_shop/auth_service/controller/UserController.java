@@ -45,7 +45,6 @@ public final class UserController {
 		final LoginResponse loginResponse = this.authService.login(loginRequest);
 		final LoginResponseDto loginResponseDto = DtoMapper.toDto(loginResponse);
 
-		final ResponseEntity<LoginResponseDto> responseEntity;
 		if (loginResponse.getCredentialsOk()) {
 			final ResponseCookie sessionCookie = ResponseCookie.from("session_id", loginResponse.getSessionId())//
 					.httpOnly(true)//
@@ -54,11 +53,9 @@ public final class UserController {
 					.sameSite("Strict")//
 					.build();
 			response.addHeader(HttpHeaders.SET_COOKIE, sessionCookie.toString());
-			responseEntity = ResponseEntity.status(HttpStatus.OK).body(loginResponseDto);
-		} else {
-			responseEntity = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(loginResponseDto);
 		}
-		return responseEntity;
+
+		return ResponseEntity.status(HttpStatus.OK).body(loginResponseDto);
 	}
 
 	@PostMapping("/logout")
