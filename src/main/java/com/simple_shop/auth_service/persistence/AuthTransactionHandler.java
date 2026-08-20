@@ -29,7 +29,7 @@ public class AuthTransactionHandler {
 	 */
 	@Transactional(readOnly = true)
 	public FailedLogin getFailedLogins(final long userId) {
-		final FailedLoginEntity failedLoginEntity = this.failedLoginRepository.findById(userId).orElseGet(null);
-		return PersistenceMapper.toDomain(failedLoginEntity);
+		final FailedLoginEntity failedLoginEntity = this.failedLoginRepository.findById(userId).orElseGet(() -> null);
+		return failedLoginEntity == null ? null : PersistenceMapper.toDomain(failedLoginEntity);
 	}
 }
