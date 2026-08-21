@@ -57,6 +57,12 @@ public class RedisSessionService {
 		return isSaved != null && isSaved;
 	}
 
+	/**
+	 * @param  sessionId
+	 *
+	 * @return           The redis session data or null if no session exists in the
+	 *                   redis cache.
+	 */
 	public RedisSessionData getSession(final String sessionId) {
 		final String sessionDataString = this.redisTemplate.opsForValue().get(sessionId);
 		return this.stringToSessionData(sessionDataString);
@@ -75,7 +81,10 @@ public class RedisSessionService {
 	}
 
 	private RedisSessionData stringToSessionData(final String sessionDataString) {
-		final long userId = Long.parseLong(sessionDataString);
-		return new RedisSessionDataBuilder().setUserId(userId).build();
+		if (sessionDataString != null) {
+			final long userId = Long.parseLong(sessionDataString);
+			return new RedisSessionDataBuilder().setUserId(userId).build();
+		}
+		return null;
 	}
 }
