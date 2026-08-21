@@ -55,9 +55,14 @@ final class DtoMapper {
 	}
 
 	private static SessionDataDto toDto(final SessionData sessionData) {
-		final SessionDataDto sessionDataDto = new SessionDataDto();
+		final SessionDataDto sessionDataDto;
 
-		sessionDataDto.setUserId(sessionData.getUserId());
+		if (sessionData != null) {
+			sessionDataDto = new SessionDataDto();
+			sessionDataDto.setUserId(sessionData.getUserId());
+		} else {
+			sessionDataDto = null;
+		}
 
 		return sessionDataDto;
 	}

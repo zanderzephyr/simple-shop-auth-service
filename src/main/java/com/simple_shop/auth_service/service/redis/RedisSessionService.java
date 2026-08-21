@@ -81,10 +81,17 @@ public class RedisSessionService {
 	}
 
 	private RedisSessionData stringToSessionData(final String sessionDataString) {
+		final RedisSessionData redisSessionData;
+
 		if (sessionDataString != null) {
 			final long userId = Long.parseLong(sessionDataString);
-			return new RedisSessionDataBuilder().setUserId(userId).build();
+			redisSessionData = new RedisSessionDataBuilder()//
+					.setUserId(userId)//
+					.build();
+		} else {
+			redisSessionData = null;
 		}
-		return null;
+
+		return redisSessionData;
 	}
 }
