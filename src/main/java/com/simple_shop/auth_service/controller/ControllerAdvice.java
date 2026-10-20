@@ -8,8 +8,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.simple_shop.auth_service.dto.AuthServiceErrorResponseDto;
-import com.simple_shop.auth_service.dto.AuthServiceErrorResponseDto.AuthServiceErrorResponseDtoBuilder;
+import com.simple_shop.auth_service.dto.ServiceErrorResponseDto;
 import com.simple_shop.auth_service.exceptions.InvalidMessageException;
 
 @RestControllerAdvice(assignableTypes = { UserController.class, BackendController.class, AdminController.class })
@@ -20,28 +19,26 @@ public final class ControllerAdvice {
 	}
 
 	@ExceptionHandler(HttpMessageNotReadableException.class)
-	public ResponseEntity<AuthServiceErrorResponseDto> handleHttpMessageNotReadableException(
+	public ResponseEntity<ServiceErrorResponseDto> handleHttpMessageNotReadableException(
 			final HttpMessageNotReadableException exception) {
 
-		final AuthServiceErrorResponseDto responseDto = new AuthServiceErrorResponseDtoBuilder()//
+		final ServiceErrorResponseDto responseDto = new ServiceErrorResponseDto()//
 				.setDetail(exception.getMessage())//
 				.setHttpState(HttpStatus.BAD_REQUEST.value())//
 				.setMessage("Request contains bad content!")//
-				.setTimestamp(Instant.now())//
-				.build();
+				.setTimestamp(Instant.now());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 	}
 
 	@ExceptionHandler(InvalidMessageException.class)
-	public ResponseEntity<AuthServiceErrorResponseDto> handleInvalidMessageException(
+	public ResponseEntity<ServiceErrorResponseDto> handleInvalidMessageException(
 			final InvalidMessageException exception) {
 
-		final AuthServiceErrorResponseDto responseDto = new AuthServiceErrorResponseDtoBuilder()//
+		final ServiceErrorResponseDto responseDto = new ServiceErrorResponseDto()//
 				.setDetail(exception.getMessage())//
 				.setHttpState(HttpStatus.BAD_REQUEST.value())//
 				.setMessage("Invalid message!")//
-				.setTimestamp(Instant.now())//
-				.build();
+				.setTimestamp(Instant.now());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 	}
 }
