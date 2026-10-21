@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.simple_shop.auth_service.dto.CurrentUserDto;
 import com.simple_shop.auth_service.dto.LoginRequestDto;
 import com.simple_shop.auth_service.dto.LoginResponseDto;
-import com.simple_shop.auth_service.exceptions.InvalidMessageException;
 import com.simple_shop.auth_service.model.LoginRequest;
 import com.simple_shop.auth_service.model.LoginResponse;
 import com.simple_shop.auth_service.service.AuthService;
@@ -36,10 +35,6 @@ public final class UserController {
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponseDto> login(//
 			@RequestBody final LoginRequestDto loginRequestDto, final HttpServletResponse response) {
-
-		if (loginRequestDto == null) {
-			throw new InvalidMessageException("No login request!");
-		}
 
 		final LoginRequest loginRequest = DtoMapper.toDomain(loginRequestDto);
 		final LoginResponse loginResponse = this.authService.login(loginRequest);
