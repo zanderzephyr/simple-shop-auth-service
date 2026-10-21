@@ -14,6 +14,7 @@ import com.simple_shop.auth_service.exceptions.InvalidMessageException;
 
 import jakarta.validation.ConstraintViolationException;
 
+// TODO Move to lib
 @RestControllerAdvice(assignableTypes = { UserController.class, BackendController.class, AdminController.class })
 public final class ControllerAdvice {
 
