@@ -27,7 +27,8 @@ public final class BackendController {
 	}
 
 	@GetMapping("/verify-session/{sessionId}")
-	public ResponseEntity<SessionVerificationDto> verifySession(@PathVariable @NotBlank final String sessionId) {
+	public ResponseEntity<SessionVerificationDto> verifySession(
+			@PathVariable("sessionId") @NotBlank final String sessionId) {
 		final SessionVerification sessionVerification = this.authService.verifySession(sessionId);
 		final SessionVerificationDto sessionVerificationDto = DtoMapper.toDto(sessionVerification);
 
